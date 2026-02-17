@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import rehypePrettyCode from 'rehype-pretty-code';
 import { getChapter, getBook, getAllBooks, getChapters } from '@/lib/books';
 
 interface Props {
@@ -34,6 +35,20 @@ export default async function ChapterPage({ params }: Props) {
     notFound();
   }
 
+  const options = {
+    mdxOptions: {
+      rehypePlugins: [
+        [
+          rehypePrettyCode,
+          {
+            theme: 'github-dark',
+            keepBackground: true,
+          },
+        ],
+      ],
+    },
+  };
+
   return (
     <div className="max-w-4xl mx-auto py-10 px-6">
       <div className="mb-8 flex items-center text-sm text-gray-500">
@@ -45,7 +60,8 @@ export default async function ChapterPage({ params }: Props) {
       </div>
 
       <article className="prose prose-lg prose-slate max-w-none">
-        <MDXRemote source={chapter.content} />
+        {/* @ts-expect-error Async Server Component */}
+        <MDXRemote source={chapter.content} options={options} />
       </article>
 
       <div className="mt-16 pt-8 border-t flex justify-between">
