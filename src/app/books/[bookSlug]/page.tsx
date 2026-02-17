@@ -1,9 +1,17 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getBook, getChapters } from '@/lib/books';
+import { getBook, getChapters, getAllBooks } from '@/lib/books';
 
 interface Props {
   params: Promise<{ bookSlug: string }>;
+}
+
+// ⚠️ Required for static export
+export async function generateStaticParams() {
+  const books = getAllBooks();
+  return books.map((book) => ({
+    bookSlug: book.slug,
+  }));
 }
 
 export default async function BookTocPage({ params }: Props) {

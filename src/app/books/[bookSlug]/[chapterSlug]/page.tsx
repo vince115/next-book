@@ -1,10 +1,27 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { getChapter, getBook } from '@/lib/books';
+import { getChapter, getBook, getAllBooks, getChapters } from '@/lib/books';
 
 interface Props {
   params: Promise<{ bookSlug: string; chapterSlug: string }>;
+}
+
+// ⚠️ Required for static export
+export async function generateStaticParams() {
+  const books = getAllBooks();
+  const params: { bookSlug: string; chapterSlug: string }[] = [];
+
+  for (const book of books) {
+    const chapters = getChapters(book.slug);
+    for (const chapter of chapters) {
+      params.push({
+        bookSlug: book.slug,
+        chapterSlug: chapter.slug,
+      });
+    }
+  }
+  return params;
 }
 
 export default async function ChapterPage({ params }: Props) {
@@ -28,11 +45,6 @@ export default async function ChapterPage({ params }: Props) {
       </div>
 
       <article className="prose prose-lg prose-slate max-w-none">
-        {/* Remove frontmatter manually if present in content, or MDXRemote handles it? 
-            Since we removed gray-matter, raw content might have --- block.
-            MDXRemote usually strips it if we configure it, or we can slice it. 
-            For Phase 1, assume content is clean or let it render.
-        */}
         <MDXRemote source={chapter.content} />
       </article>
 
