@@ -1,0 +1,20 @@
+---
+title: "Meaningful Names"
+---
+
+# Meaningful Names
+
+Names are everywhere in software. We name our variables, our functions, our arguments, our classes, and our packages.
+
+## Use Intention-Revealing Names
+
+The name of a variable, function, or class, should answer all the big questions. It should tell you why it exists, what it does, and how it is used.
+
+```typescript
+// Bad
+let d: number; // elapsed time in days
+
+// Good
+let elapsedTimeInDays: number;
+let daysSinceCreation: number;
+```
