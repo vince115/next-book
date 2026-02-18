@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import matter from 'gray-matter';
 
 const booksDirectory = path.join(process.cwd(), 'content/books');
 
@@ -90,8 +91,13 @@ export function getChapters(bookSlug: string): ChapterMeta[] {
     const order = match ? parseInt(match[1], 10) : 999;
     const slug = match ? match[2] : fileName.replace(/\.mdx$/, '');
     
-    // Phase 1: Use slug as title (formatted)
-    const title = slugToTitle(slug);
+    // Read frontmatter for title
+    const fullPath = path.join(bookDir, fileName);
+    const fileContent = fs.readFileSync(fullPath, 'utf8');
+    const { data } = matter(fileContent);
+
+    // Use frontmatter title or fallback to slug
+    const title = data.title || slugToTitle(slug);
 
     return {
       title,
@@ -115,10 +121,12 @@ export function getChapter(bookSlug: string, chapterSlug: string): ChapterConten
   if (!chapter) return null;
 
   const fullPath = path.join(booksDirectory, bookSlug, chapter.fileName);
-  const content = fs.readFileSync(fullPath, 'utf8');
+  const fileContent = fs.readFileSync(fullPath, 'utf8');
+  const { content, data } = matter(fileContent); // Parse frontmatter
 
   return {
     ...chapter,
-    content,
+    title: data.title || chapter.title,
+    content, // Clean content without frontmatter
   };
 }

@@ -1,37 +1,16 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* 🎨 Tailwind 樣式補強 for rehype-pretty-code */
+/* Rehype Pretty Code Styles */
 pre {
-  padding: 1rem;
-  border-radius: 0.75rem;
-  overflow-x: auto;
-  /* 如果你希望背景由 theme 控制，可以移除這裡的 bg- */
-  /* background-color: #282c34; */ 
+  @apply p-4 rounded-xl overflow-x-auto border border-gray-200 dark:border-gray-800;
 }
 
 code {
