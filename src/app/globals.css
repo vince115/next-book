@@ -16,3 +16,47 @@ pre {
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
+
+/* Print Styles */
+@media print {
+  @page {
+    margin: 2cm;
+  }
+
+  /* Hide UI elements */
+  aside, nav, header, footer, button {
+    display: none !important;
+  }
+
+  /* Reset layout constraints */
+  body, main, div[class*="flex"], div[class*="overflow"] {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    width: 100% !important;
+    position: static !important;
+  }
+
+  /* Reset colors for printing (save ink) */
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  /* Reset dark mode text colors */
+  [class*="text-"] {
+    color: black !important;
+  }
+
+  /* Prose content adjustment */
+  .prose {
+    max-width: 100% !important;
+    color: black !important;
+  }
+  
+  /* Ensure links are underlined but black */
+  a {
+    text-decoration: underline;
+    color: black !important;
+  }
+}

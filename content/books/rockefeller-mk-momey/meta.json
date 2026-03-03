@@ -1,6 +1,18 @@
 {
-  "title": "Clean Code",
-  "author": "Robert C. Martin",
-  "description": "A Handbook of Agile Software Craftsmanship",
-  "coverImage": "/books/clean-code/cover.jpg"
+  "title": "洛克菲勒談賺錢",
+  "author": "約翰．D．洛克菲勒",
+  "english_title": "John D. Rockefeller on Making Money",
+  "description": "美國史上第一位億萬富豪的致富語錄與書信【中英對照】",
+  "coverImage": "/books/rockefeller-mk-money/cover.jpg",
+  "publisher": "樂金文化",
+  "sections": [
+    "第一章 人與金錢",
+    "第二章 金錢與幸福",
+    "第三章 信仰與慈善",
+    "第四章 面對批評與應對",
+    "第五章 給大企業的忠告",
+    "第六章 給後代的忠告",
+    "第七章 洛克菲勒的私人信件",
+    "附錄 洛克菲勒生平大事記"
+  ]
 }

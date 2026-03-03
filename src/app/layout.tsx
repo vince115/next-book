@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
+import { Sidebar } from "@/components/Sidebar";
 import { SidebarProvider } from "@/contexts/SidebarContext";
 
 const geistSans = Geist({
@@ -27,13 +28,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex overflow-hidden bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300`}
       >
         <SidebarProvider>
-          <Navbar />
-          <main className="flex-1 w-full flex flex-col lg:flex-row">
-            {children}
-          </main>
+          {/* Global Sidebar (Left) */}
+          <Sidebar />
+
+          {/* Main Content Area (Right) */}
+          <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
+            <Navbar />
+            <main className="flex-1 w-full overflow-y-auto">
+              {children}
+            </main>
+          </div>
         </SidebarProvider>
       </body>
     </html>

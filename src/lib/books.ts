@@ -89,7 +89,8 @@ export function getChapters(bookSlug: string): ChapterMeta[] {
     // Filename parsing: "01-intro.mdx" -> order: 1, slug: "intro"
     const match = fileName.match(/^(\d+)-(.+)\.mdx$/);
     const order = match ? parseInt(match[1], 10) : 999;
-    const slug = match ? match[2] : fileName.replace(/\.mdx$/, '');
+    // ⚠️ Normalize to NFC for consistent string matching (macOS uses NFD)
+    const slug = (match ? match[2] : fileName.replace(/\.mdx$/, '')).normalize('NFC');
     
     // Read frontmatter for title
     const fullPath = path.join(bookDir, fileName);
