@@ -1,3 +1,4 @@
+//src/app/books/[bookSlug]/[chapterSlug]/page.tsx
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -39,7 +40,7 @@ export async function generateStaticParams() {
 
 export default async function ChapterPage({ params }: Props) {
   const { bookSlug, chapterSlug } = await params;
-  
+
   const book = getBook(bookSlug);
   const chapter = getChapter(bookSlug, chapterSlug);
   const chapters = getChapters(bookSlug); // Fetch for Sidebar
@@ -48,31 +49,28 @@ export default async function ChapterPage({ params }: Props) {
     notFound();
   }
 
-  const options = {
-    // @ts-expect-error
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [
-        [
-          rehypePrettyCode,
-          {
-            theme: 'github-dark',
-            keepBackground: true,
-          },
-        ],
-      ],
-    },
-  };
-
   return (
-    <ChapterContentWrapper 
-      bookSlug={bookSlug} 
-      chapters={chapters} 
+    <ChapterContentWrapper
+      bookSlug={bookSlug}
+      chapters={chapters}
       chapterTitle={chapter.title}
     >
-      <MDXRemote 
-        source={chapter.content} 
-        options={options} 
+      <MDXRemote
+        source={chapter.content}
+        options={{
+          mdxOptions: {
+            remarkPlugins: [remarkGfm],
+            rehypePlugins: [
+              [
+                rehypePrettyCode as any,
+                {
+                  theme: "github-dark",
+                  keepBackground: true,
+                },
+              ],
+            ],
+          },
+        }}
         components={mdxComponents}
       />
     </ChapterContentWrapper>
