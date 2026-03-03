@@ -49,6 +49,7 @@ export default async function ChapterPage({ params }: Props) {
   }
 
   const options = {
+    // @ts-expect-error
     mdxOptions: {
       remarkPlugins: [remarkGfm],
       rehypePlugins: [
@@ -69,7 +70,6 @@ export default async function ChapterPage({ params }: Props) {
       chapters={chapters} 
       chapterTitle={chapter.title}
     >
-      {/* @ts-expect-error Async Server Component */}
       <MDXRemote 
         source={chapter.content} 
         options={options} 
